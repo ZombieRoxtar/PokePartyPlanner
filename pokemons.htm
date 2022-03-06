@@ -1,0 +1,246 @@
+<html>
+	<head>
+		<title>Poké Party</title>
+		<style>
+			body
+			{
+				margin-left:50px;
+			}
+			td
+			{
+				vertical-align:top;
+			}
+			.center
+			{
+				text-align:center;
+			}
+			.right
+			{
+				text-align:right;
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+			<!--
+			function pType(name="???",weakness0="None",weakness1=null,weakness2=null,weakness3=null,weakness4=null,weakness5=null)
+			{
+				this.name=name;
+				this.weaknesses=new Array(weakness0,weakness1,weakness2,weakness3,weakness4,weakness5);
+			}
+			var types=
+			[
+				new pType("Bug","Fire","Flying","Rock"),
+				new pType("Dark","Bug","Fairy","Fighting"),
+				new pType("Dragon","Dragon","Fairy","Ice"),
+				new pType("Electric","Ground"),
+				new pType("Fairy","Poison","Steel"),
+				new pType("Fighting","Flying","Psychic"),
+				new pType("Fire","Ground","Rock","Water"),
+				new pType("Flying","Electric","Ice","Rock"),
+				new pType("Ghost","Dark","Ghost"),
+				new pType("Grass","Bug","Fire","Flying","Ice","Poison"),
+				new pType("Ground","Grass","Ice","Water"),
+				new pType("Ice","Fighting","Fire","Rock"),
+				new pType("Normal","Fighting"),
+				new pType("Poison","Ground","Psychic"),
+				new pType("Psychic","Bug","Dark","Ghost"),
+				new pType("Rock","Fighting","Grass","Ground","Steel","Water"),
+				new pType("Steel","Fighting","Fire","Ground"),
+				new pType("Water","Electric","Grass"),
+			];
+			function partOne()
+			{
+				var leftHTML="<table border=1>\n";
+				leftHTML+="<tr><td>Pokémon to Use</td><td>Enemy Type</td><td colspan=6 class=center>Enemy Weaknesses</td></tr>\n";
+				for(var i=0;i<types.length;i++)
+				{
+					leftHTML+="<tr>";
+					leftHTML+="<td class=right>";
+					leftHTML+="<select onchange='UpdateCounts()'>";
+					for(var j=0;j<types.length;j++)
+					{
+						leftHTML+="<option></option>";
+					}
+					leftHTML+="</select></td>\n";
+					leftHTML+="<td>";
+					leftHTML+=types[i].name;
+					leftHTML+="</td>\n";
+					for(var k=0;k<5;k++)
+					{
+						if(types[i].weaknesses[k]!==null)
+						{
+							leftHTML+="<td><i>";
+							leftHTML+=types[i].weaknesses[k];
+							leftHTML+="</i></td>\n";
+						}
+						else
+						{
+							leftHTML+="<td></td>\n";
+						}
+					}
+					leftHTML+="</tr>\n";
+				}
+				leftHTML+="</table>\n";
+				document.getElementById("tableL").innerHTML=leftHTML;
+				/*Center Table*/
+				var centerHTML="<table border=1>\n";
+				centerHTML+="<tr><td>";
+				centerHTML+="Pokémon";
+				centerHTML+="</td><td>";
+				centerHTML+="Used";
+				centerHTML+="</td></tr>";
+				for(var l=0;l<types.length;l++)
+				{
+					centerHTML+="<tr><td>";
+					centerHTML+="<input onblur='UpdateSheet()'/>";
+					centerHTML+="</td><td>";
+					centerHTML+="<div id="+l+" class=center>";
+					centerHTML+="0";
+					centerHTML+="</div>";
+					centerHTML+="</td></tr>";
+				}
+				centerHTML+="</table>\n";
+				document.getElementById("tableC").innerHTML=centerHTML;
+			}
+			/*Right Table*/
+			function pType2(name="???",resistance0="None",resistance1=null,resistance2=null,resistance3=null,resistance4=null,resistance5=null,resistance6=null)
+			{
+				this.name=name;
+				this.resistors=new Array(resistance0,resistance1,resistance2,resistance3,resistance4,resistance5,resistance6);
+			}
+			var types2=
+			[
+				new pType2("Bug","Fairy","Fighting","Fire","Flying","Ghost","Poison","Steel"),
+				new pType2("Dark","Dark","Fairy","Fighting"),
+				new pType2("Dragon","Steel"),
+				new pType2("Electric","Dragon","Electric","Grass"),
+				new pType2("Fairy","Fire","Poison","Steel"),
+				new pType2("Fighting","Bug","Fairy","Flying","Poison","Psychic"),
+				new pType2("Fire","Dragon","Fire","Rock","Water"),
+				new pType2("Flying","Electric","Rock","Steel"),
+				new pType2("Ghost","Dark"),
+				new pType2("Grass","Bug","Dragon","Fire","Flying","Grass","Poison","Steel"),
+				new pType2("Ground","Bug","Grass"),
+				new pType2("Ice","Fire","Ice","Steel","Water"),
+				new pType2("Normal","Rock","Steel"),
+				new pType2("Poison","Poison","Ground","Rock","Ghost"),
+				new pType2("Psychic","Psychic","Steel"),
+				new pType2("Rock","Fighting","Ground","Steel"),
+				new pType2("Steel","Electric","Fire","Steel","Water"),
+				new pType2("Water","Dragon","Grass","Water"),
+			];
+			var immunities2=
+			[
+				null,null,"Fairy","Ground",null,"Ghost",null,null,"Normal",null,"Flying",null,"Ghost","Steel","Dark",null,null,null,
+			];
+			window.onload=function()
+			{
+				partOne();
+				var rightHTML="<table border=1>\n";
+				rightHTML+="<tr><td>Pokémon to Use</td><td>Enemy Type</td><td colspan=7 class=center>Enemy Resistors</td><td class=center>Immune</td></tr>\n";
+				for(var i=0;i<types2.length;i++)
+				{
+					rightHTML+="<tr>";
+					rightHTML+="<td class=right>";
+					rightHTML+="<select onchange='UpdateCounts()'>";
+					for(var j=0;j<types2.length;j++)
+					{
+						rightHTML+="<option></option>";
+					}
+					rightHTML+="</select>";
+					rightHTML+="</td>\n<td>";
+					rightHTML+=types2[i].name;
+					rightHTML+="</td>\n";
+					for(var k=0;k<7;k++)
+					{
+						if(types2[i].resistors[k]!==null)
+						{
+							rightHTML+="<td><i>";
+							rightHTML+=types2[i].resistors[k];
+							rightHTML+="</i></td>\n";
+						}
+						else
+						{
+							rightHTML+="<td></td>\n";
+						}
+					}
+					rightHTML+="<td>";
+					if(immunities2[i]!==null)
+					{
+						rightHTML+=immunities2[i];
+					}
+					else
+					{
+						rightHTML+="None";
+					}
+					rightHTML+="</td>\n</tr>\n";
+				}
+				rightHTML+="</table>\n";
+				document.getElementById("tableR").innerHTML=rightHTML;
+			}
+			/*Update Numeric Text*/
+			function UpdateCounts()
+			{
+				var pUses=new Array;
+				var pActive=new Array;
+				var pSize=0;
+				for(var i=0;i<document.getElementsByTagName("input").length;i++)
+				{
+					pUses[i]=0;
+					pActive[i]=false;
+					for(var j=0;j<document.getElementsByTagName("select").length;j++)
+					{
+						if(document.getElementsByTagName("select")[j].selectedIndex==i)
+						{
+							pUses[i]++;
+							pActive[i]=true;
+						}
+					}
+					document.getElementById(i).innerHTML=pUses[i];
+				}
+				for(var k=0;k<pActive.length;k++)
+				{
+					if(pActive[k])
+					{
+						pSize++;
+					}
+				}
+				document.getElementById("sizeDiv").innerHTML="Party Size: "+pSize;
+			}
+			/*Populate Options*/
+			function UpdateSheet()
+			{
+				for(var i=0;i<document.getElementsByTagName("select").length;i++)
+				{
+					for(var j=0;j<document.getElementsByTagName("input").length;j++)
+					{
+						document.getElementsByTagName("select")[i].options[j].innerText=document.getElementsByTagName("input")[j].value;
+					}
+				}
+				UpdateCounts();
+			}
+			//-->
+		</script>
+		<h1>Pokémon Party Planner</h1>
+		Input all of the Pokémon that you to might use into the boxes in the center. Then use the comboboxes on each side to check type coverages.<br/>Your party count will be at the bottom of the screen. If the party count is over six then use the count of each Pokémon next to their box to see which Pokémon is used the least.
+		<table>
+			<tr>
+				<td>
+					<div id=tableL />
+				</td>
+				<td>
+					<div id=tableC />
+				</td>
+				<td>
+					<div id=tableR />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div id=sizeDiv>Party Size: 0</div>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
